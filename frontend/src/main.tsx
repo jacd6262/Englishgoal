@@ -7,11 +7,13 @@ import { Navbar } from "./components/custom/Navbar.tsx";
 import Cronometro from "./pages/Cronometro.tsx";
 import Historial from "./pages/Historial.tsx";
 import { GoalsProvider } from "./components/custom/GoalContext.tsx";
+import { Toaster } from "@/components/ui/sonner";
 
 createRoot(document.getElementById("root")!).render(
   <GoalsProvider>
     <StrictMode>
       <BrowserRouter>
+        <Toaster theme="dark" position="bottom-right" className="!bg-zinc-950 !border-zinc-800" />
         <Navbar />
         <Routes>
           <Route path="/" element={<App />} />

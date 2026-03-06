@@ -6,7 +6,6 @@ import {
   updateActivity,
 } from "../../api/ApiControllers";
 import type { Activity, ActivityWithId } from "../../api/interface";
-import { useGoalsContext } from "../../components/custom/GoalContext";
 
 export const useActivities = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -15,7 +14,6 @@ export const useActivities = () => {
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { reloadGoals } = useGoalsContext();
 
   //obtener actividades
   useEffect(() => {
@@ -33,9 +31,10 @@ export const useActivities = () => {
     try {
       const newActivity = await createActivity(activity);
       setActivities([...activities, newActivity]);
-      reloadGoals(); // recargar metas después de agregar una actividad
+      return newActivity; // Devolvemos la actividad para que el componente sepa que terminó
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
+      throw err; // Relanzamos el error para manejarlo en el componente
     }
   };
 
